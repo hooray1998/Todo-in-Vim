@@ -9,7 +9,7 @@
 
 ![demo.gif](./demo.gif)
 
-视频中vim下方一闪而过的就是git push和git pull异步执行的输出
+视频中vim下方一闪而过的就是git push和git pull异步执行输出的quickfix窗口
 
 # 安装步骤
 ### 步骤一_下载该项目并部署到远程仓库
