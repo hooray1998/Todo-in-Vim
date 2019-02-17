@@ -12,10 +12,12 @@
 视频中vim下方一闪而过的就是git push和git pull异步执行的输出
 
 # 安装步骤
-### 步骤一 下载该项目并部署到远程仓库
+### 步骤一_下载该项目并部署到远程仓库
 
 - 方式一:(需要多平台同步功能)
 	-	Fork该项目到自己的github或coding上(墙内使用Coding之类的同步速度极快)
+		- 项目Github地址：https://github.com/hooray1998/Todo-in-Vim
+		- 项目Coding地址：https://dev.tencent.com/u/Hoorayitt/p/Todo-in-Vim/git
 	-	使用git clone克隆自己账户上的项目,为了方便多平台同步
 -	方式二:(需要多平台同步功能)
 	-	git clone 本项目到本地, 然后push到自己的云端仓库上
