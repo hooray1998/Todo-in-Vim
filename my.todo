@@ -4,13 +4,16 @@ $ My-TODO-List
 	@ Todo-in-vim项目流程
 		☐ init.sh编写
 			☐ 语法高亮文件编写
-			☐ todo别名设置
-				☐ todo
-				☐ 版本回退(backspace,fallback,grst)
-				☐ 上传(upload)
-				☐ 下载(download)
-			☐ 进入shell时显示todo
+			✔ todo别名设置 ★
+				✔ todo
+				✔ 版本回退(backspace,fallback,grst)
+				☐ 上传(upload) ★ ★
+				✔ 下载(download) ★ ★ ★
+			✔ 进入shell时显示todo
 		☐ 快捷键映射
+			☐ list 
+				☐ one
+				☐ two
 			☐ normal模式
 				☐ Ctrl-j 与 Ctrl-k
 				☐ Enter的作用 ★ ★ ★
@@ -54,7 +57,7 @@ $ My-TODO-List
 			☐ Ubuntu和Mac平台测试
 			☐ Windows平台测试
 		☐ 项目文档编写
-			☐ 安装说明 ★
+			☐ 安装说明 ★ ★
 			☐ 快捷键文档
 
 	@ 问题与解决
