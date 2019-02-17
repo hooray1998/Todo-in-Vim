@@ -206,7 +206,7 @@ map L $
 vnoremap L $h
 
 "保存文件
-nnoremap <leader>w :w<CR>
+nnoremap <leader>w :w<CR><CR>
 nnoremap <leader>e :wqall<CR>
 "nnoremap <leader>e :call PushAndExit()<CR>
 "快捷复制粘贴至系统
