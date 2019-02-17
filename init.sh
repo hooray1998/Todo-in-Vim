@@ -6,4 +6,5 @@ then
 	mkdir $HOME/.vim/syntax
 fi
 cp ./.todo.vim  $HOME/.vim/syntax/todo.vim
-source ./todo.sh
+echo '将如下语句添加到shell配置文件（例如.zshrc或.bashrc）中去'
+echo "source `pwd`/todo.sh"
