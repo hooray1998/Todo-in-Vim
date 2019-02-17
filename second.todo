@@ -1,0 +1,33 @@
+$ My-TODO-List
+☐ 
+
+	@My Board :多做笔记
+		☐ add a cd
+		☐ 删除了一个文件
+		☐ shell包装成了一个文件, 开启终端时获取最新,保存文件时上传更新
+		☐ 看吴恩达上课笔记 ★ ★ ★
+		☐ new list
+			☐ one
+			✔ fasd ★ ★ ★ ★
+				☐ fasd
+				✔ fasd
+		☐ 测试之前的代码能不能运行
+		✔ vim的Golbal整理
+		
+	@python module
+		☐ matplotlib
+			✔ 总结博客
+		☐ pandas
+			✔ 总结博客
+		☐ opencv
+			✔ 看书
+			☐ 博客学习
+		☐ tensorflow ★
+			☐ 练习
+			✔ 总结博客
+		
+	@演示一下一个vim中使用的翻译插件
+		☐ 机器学习
+		☐ Kaggle入门 ★
+		☐ 做第一个项目
+		☐ 深度学习博客

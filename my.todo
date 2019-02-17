@@ -1,0 +1,67 @@
+$ My-TODO-List
+
+
+	@ Todo-in-vim项目流程
+		☐ init.sh编写
+			☐ 语法高亮文件编写
+			☐ todo别名设置
+				☐ todo
+				☐ 版本回退(backspace,fallback,grst)
+				☐ 上传(upload)
+				☐ 下载(download)
+			☐ 进入shell时显示todo
+		☐ 快捷键映射
+			☐ normal模式
+				☐ Ctrl-j 与 Ctrl-k
+				☐ Enter的作用 ★ ★ ★
+			☐ insert模式
+				☐ Tab 与 Shift-Tab
+				☐ Enter
+		☐ Todo同步功能 ★
+		
+	@ Todo同步功能的三个版本
+		☐ 版本1: (原理最简单)
+			☐ 进入Todo时自动git pull云端最新版
+			☐ 保存Todo时自动提交当前所有修改并git push到云端
+			☐ 优点:
+				☐ 小型Todo list可以及时更新
+			☐ 缺点:
+				☐ 进入Todo时有一秒的延迟卡顿,不爽
+		☐ 版本2: (在Shell启动退出时同步)
+			☐ 进入终端Shell时自动git pull云端最新版
+			☐ 关闭终端Shell时自动提交当前所有修改并git push到云端
+			☐ 优点:
+				☐ 运行Todo无任何卡顿
+				☐ 该Todo仅为一个人使用时较为友好
+			☐ 缺点:
+				☐ 保存的版本较少, 但可通过手动更新(终端下输入upload)弥补.
+		☐ 版本3: (使用大佬韦易笑在Vim中异步执行Shell指令的插件) ★
+			☐ 异步插件项目地址:https://github.com/skywind3000/asyncrun.vim
+			☐ 进入Todo时异步git pull云端最新版
+			☐ 保存Todo时自动提交当前所有修改并异步git push到云端
+			☐ 优点:
+				☐ 进入退出Todo均无卡顿
+			☐ 缺点:
+				☐ 每次修改都会保存上传,所以版本记录较多,建议重大版本手动提交一次.
+			☐ 建议:
+				☐ 使用vim-fugitive插件管理版本
+			
+	@ 项目测试与发布
+		☐ git仓库同步速度测试
+			✔ Coding
+			☐ Github
+		☐ 平台测试:清空版本库重新下载
+			☐ Ubuntu和Mac平台测试
+			☐ Windows平台测试
+		☐ 项目文档编写
+			☐ 安装说明 ★
+			☐ 快捷键文档
+
+	@ 问题与解决
+		✔ 修改秒数的错误 
+		✔ 处理好git crash的逻辑 ★
+			✔ 当多人同时提交时,会出现冲突,后提交者需要重启todo处理冲突才可再次提交.
+		✔ 在任意位置启动todo都可以正常同步,且不改变当前路径
+		☐ 使用<Space>e快速退出时不会上传
+		☐ Enter的反向作用:将✔ 变成☐ 
+		
