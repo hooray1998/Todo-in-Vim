@@ -6,3 +6,4 @@ then
 	mkdir $HOME/.vim/syntax
 fi
 cp ./.todo.vim  $HOME/.vim/syntax/todo.vim
+
