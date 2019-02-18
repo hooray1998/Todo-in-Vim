@@ -218,30 +218,31 @@ nnoremap <C-A> ggVG"+y<CR>
 
 
 "=================================================================
-"	for TODO
+"	for TODO 快捷键
 "=================================================================
-
-"追加该行到文件study
-
+"   图标备选： ⭐️ ☑️    , 也可网上找, 替换掉下方对应的即可
 nnoremap <C-N> A ★0w
 nnoremap <C-J> :.s/☐/✔/g<CR>j<C-L>
 nnoremap <Enter> :.s/☐/✔/g<CR>j<C-L>
 nnoremap <C-K> :.s/✔/☐/g<CR>j
-nnoremap <C-H> A<C-H><C-H>
+nnoremap <C-H> :.s/ ★//g<CR>
 nnoremap <Backspace> :.s/ ★//g<CR>
 nnoremap o o☐ 
+inoremap jj  
 inoremap <Enter> <Enter>☐ 
 inoremap <Tab> ma>>`ala
 inoremap <S-Tab> ma<<`aa
 nnoremap ]] /@<CR>
 nnoremap [[ ?@<CR>
 
+
+"=================================================================
 au BufRead,BufNewFile *.todo,*.Todo set filetype=todo
 
+" 自动显示隐藏quickfix窗口"
 augroup vimrc
 	autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
 augroup END
-
 "=================================================================
 " Todo异步更新
 "=================================================================
@@ -250,8 +251,10 @@ autocmd bufwritepost *.todo,*.Todo call Push()
 func Push() 
 	call system("git add --all")
 	call system("git commit -m \"`whoami` @  `hostname` in `date +%y-%m-%d=%H:%M:%S`\"")
+	"如果退出时等待上传完成后才退出，则使用这句，注释后一句
+	"call system("git push origin master")
 "================不使用多平台同步则注释掉 no-update==============="
-	exec ":AsyncRun git push origin master" 
+	exec ":AsyncRun git push origin master"
 endfunc 
 func Pull() 
 	exec ":cd %:h"
