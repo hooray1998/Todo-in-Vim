@@ -67,7 +67,7 @@ Ctrl-K|取消☑️
 Ctrl-N|添加⭐️
 Ctrl-H|取消⭐️
 BackSpace|取消⭐️
-Space-W|保存文件并上传
+Space-W|**保存文件并上传**
 Space-E|快速退出
 ]]|跳转到下一个列表
 [[|跳转到上一个列表
