@@ -1,10 +1,23 @@
 #!/bin/bash
 
-# 增加todo语法高亮文件
-if [ ! -e $HOME/.vim/syntax ]
+# 复制相关vim插件
+if [ ! -e $HOME/.vim ]
 then
-	mkdir $HOME/.vim/syntax
+	mkdir $HOME/.vim
 fi
-cp ./.todo.vim  $HOME/.vim/syntax/todo.vim
-echo '将如下语句添加到shell配置文件（例如.zshrc或.bashrc）中去'
-echo "source `pwd`/todo.sh"
+cp -r .vim_Plugins/* $HOME/.vim/
+cp bin/.vimrc_git ./.vimrc_for_todo
+
+if [ "/bin/zsh" = $SHELL ]
+then
+	echo "source `pwd`/bin/todo.sh" >> $HOME/.zshrc
+	echo "请运行 source $HOME/.zshrc 刷新"
+elif [ "/bin/bash" = $SHELL ]
+then
+	echo "source `pwd`/bin/todo.sh" >> $HOME/.bashrc
+	echo "请运行 source $HOME/.bashrc 刷新"
+else
+	echo '将如下语句添加到shell配置文件（例如zsh的.zshrc或bash的.bashrc）中去'
+	echo "source `pwd`/bin/todo.sh"
+	echo "并运行source {您的shell配置文件} 刷新"
+fi
