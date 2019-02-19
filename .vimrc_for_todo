@@ -4,7 +4,7 @@
 call plug#begin('~/.vim/plugged')
 
 " 异步执行Shell的插件
-"Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asyncrun.vim'
 
 " 美化状态栏和标签页 不需要可以注释掉
 Plug 'vim-airline/vim-airline'
@@ -206,16 +206,16 @@ inoremap <S-Tab> ma<<`aa
 
 
 " 自动显示隐藏同步时的quickfix窗口"
-"augroup vimrc
-	"autocmd User AsyncRunStart call asyncrun#quickfix_toggle(1, 1)
-"augroup END
+augroup vimrc
+	autocmd User AsyncRunStart call asyncrun#quickfix_toggle(1, 1)
+augroup END
 "=================================================================
 " Todo异步更新
 "=================================================================
 
 autocmd BufRead,BufNewFile *.todo set filetype=todo
 "每次启动Todo时都先最新版"
-"autocmd VimEnter *.todo call GitPull()
+autocmd VimEnter *.todo call GitPull()
 "保存文件时自动存储该版本"
 autocmd bufwritepost *.todo call GitPush() 
 "新建文件自动插入文件头 
@@ -231,7 +231,7 @@ func GitPush()
 	" 上传到云端
 	call system("git add --all")
 	call system("git commit -m \"`whoami` @  `hostname` in `date +%y-%m-%d=%H:%M:%S`\"")
-	"exec ":AsyncRun git push origin master"
+	exec ":AsyncRun git push origin master"
 endfunc 
 func GitPull() 
 	" 获取云端最新版
