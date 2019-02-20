@@ -1,10 +1,18 @@
-$ SECOND-TODO
+$ study-TODO
 
 	@My Board :多做笔记
 		☐ 看吴恩达上课笔记 ★ ★ ★
 		☐ 测试之前的ML代码能不能运行
 		✔ vim的Golbal整理
 		
+	@ 终端下
+		☐ 韦一笑命令行词典
+		☐ tree的使用
+		☐ vim中
+			☐ 延时加载ycm,
+			☐ 动态语法检查
+			☐ gctags安装 
+
 	@python module
 		☐ matplotlib
 			✔ 总结博客

@@ -55,4 +55,4 @@ todo-setting(){
 }
 
 # 每次启动都显示todo
-echo "Todo 未完成列表";cat $TODO/*.todo |grep ☐  # 每次启动shell都会显示todo
+echo "Todo 未完成列表";cat $TODO/*.todo |grep '[$@☐]'  # 每次启动shell都会显示todo

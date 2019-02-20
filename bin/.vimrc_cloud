@@ -140,6 +140,84 @@ let g:lightline = { 'colorscheme': 'monokai_tasty', }
 let g:airline_theme='monokai_tasty'
 
 "=================================================================
+" 自动显示隐藏同步时的quickfix窗口"
+augroup vimrc
+	autocmd User AsyncRunStart call asyncrun#quickfix_toggle(1, 1)
+augroup END
+"=================================================================
+"	快捷键映射相关函数
+"=================================================================
+
+func Settitle() 
+	call setline(1,"\$ ".expand("%:t:r").expand("-Todo"))
+	call append(line("."),"") 
+	call append(line(".")+1, "	@ First List") 
+    normal G$
+endfunc 
+func GitPush() 
+	" 上传到云端
+	call system("git add --all")
+	call system("git commit -m \"`whoami` @  `hostname` in `date +%y-%m-%d=%H:%M:%S`\"")
+	exec ":AsyncRun git push origin master"
+endfunc 
+func GitPull() 
+	" 获取云端最新版
+	exec ":cd %:h"
+	.normal 
+	exec ":AsyncStop"
+	exec ":AsyncRun git pull origin master"  
+	autocmd User AsyncRunStop exec ":ccl"
+	autocmd User AsyncRunStop exec ":e %"
+endfunc 
+func AtPullEnd()
+endfunc
+func CheckOrUncheck()
+	" 选中或取消选中
+	.normal "ayy
+	let loc_k=match(@a,"☐")
+	let loc_g=match(@a,"✔")
+	"同时选中子主题
+	if loc_k>-1
+		.normal 0f☐s✔j
+		.normal ""yy
+		let k=match(@","☐")
+		let g=match(@","✔")
+		while k>loc_k || g>loc_k
+			if k>loc_k
+				.normal 0f☐s✔j""yy
+				let k=match(@","☐")
+				let g=match(@","✔")
+			else
+				let k=-1
+				let g=-1
+			endif
+		endwhile
+		.normal `b
+	elseif loc_g>-1
+		.normal 0f✔s☐`b
+	else
+		.normal j
+	endif
+endfunc
+func NewLine()
+	if match(@r,"@")>-1
+		.normal >>I☐ l
+	elseif match(@r,"☐")>-1
+		.normal I☐ l
+	elseif match(@r,"✔")>-1
+		.normal I☐ l
+	endif
+endfunc
+func CheckAllChild()
+	.normal "ryy
+	let loc = match(@r,"☐")
+	if loc>-1
+	else
+		.normal j
+	endif
+endfunc
+
+"=================================================================
 "	键盘命令
 "=================================================================
 
@@ -174,17 +252,18 @@ nnoremap <C-A> ggVG"+y<CR>
 
 " normal 模式快捷键
 "=================================================================
-nnoremap <Enter> :call  CheckOrUncheck()<CR>
+nnoremap <Enter> mb:call  CheckOrUncheck()<CR>
 nnoremap * maA ★`a
 nnoremap # maA ★`a
 nnoremap <Backspace> :.s/ ★//g<CR>
-nnoremap o o☐ 
+nnoremap o "ryyo.:call NewLine()<CR>a
 nnoremap O O☐ 
-nnoremap <C-J> /\s@/e<CR>
-nnoremap <C-K> ?\s@?e<CR>
-nnoremap J /\s@/e<CR>
-nnoremap K ?\s@?e<CR>
-nnoremap <C-N> :edit 
+nnoremap <C-j> /^\s*@/e<CR>
+nnoremap <C-k> ?^\s*@?e<CR>
+nnoremap J /^\s*@/e<CR>
+nnoremap K ?^\s*@?e<CR>
+nnoremap <C-n> :edit 
+nnoremap <C-z> u
 
 
 " insert 模式快捷键
@@ -194,21 +273,15 @@ nnoremap <C-N> :edit
 inoremap jj 
 inoremap kk 
 inoremap jk 
+inoremap kj 
 inoremap ;; 
 
-" 编辑下一行
-inoremap <Enter> <Enter>☐ 
 " 改变缩进
 inoremap <Tab> .ma>>`ala
 inoremap <S-Tab> ma<<`aa
+" 编辑下一行
+inoremap <Enter> "ryya.:call NewLine()<CR>a
 
-"=================================================================
-
-
-" 自动显示隐藏同步时的quickfix窗口"
-augroup vimrc
-	autocmd User AsyncRunStart call asyncrun#quickfix_toggle(1, 1)
-augroup END
 "=================================================================
 " Todo异步更新
 "=================================================================
@@ -219,39 +292,4 @@ autocmd VimEnter *.todo call GitPull()
 "保存文件时自动存储该版本"
 autocmd bufwritepost *.todo call GitPush() 
 "新建文件自动插入文件头 
-autocmd BufNewFile *.todo exec ":call Settitle()" 
-
-func Settitle() 
-	call setline(1,"\$ ".expand("%:t:r").expand("-Todo"))
-	call append(line("."),"") 
-	call append(line(".")+1, "	@ My Board:") 
-    normal G$
-endfunc 
-func GitPush() 
-	" 上传到云端
-	call system("git add --all")
-	call system("git commit -m \"`whoami` @  `hostname` in `date +%y-%m-%d=%H:%M:%S`\"")
-	exec ":AsyncRun git push origin master"
-endfunc 
-func GitPull() 
-	" 获取云端最新版
-	exec ":cd %:h"
-	.normal 
-	exec ":AsyncStop"
-	exec ":AsyncRun git pull origin master"  
-	autocmd User AsyncRunStop exec ":ccl"
-	autocmd User AsyncRunStop exec ":e %"
-endfunc 
-func CheckOrUncheck()
-	" 选中或取消选中
-	.normal "ayy
-	let s=split(@a,"☐")
-	let ss=split(@a,"✔")
-	if len(s)==2
-		.normal mb0f☐s✔`b
-	elseif len(ss)==2
-		.normal mb0f✔s☐`b
-	else
-		.normal j
-	endif
-endfunc
+autocmd BufNewFile *.todo call Settitle()
