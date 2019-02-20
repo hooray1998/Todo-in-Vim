@@ -1,37 +1,36 @@
 $ study-TODO
 	
-	@ 学习Todo的使用
-		☐ 
-
+	@ 学习Todo-in-Vim的使用
+		☐ 快捷键
+			☐ normal模式 => 功能
+				☐ 常用
+					☐ Enter => 选中或取消选中 ★ ★ ★
+					☐ # 或 * => 添加⭐️
+					☐ BackSpace => 取消⭐️
+				✔ 快速移动
+					✔ Ctrl+j 或 J => 跳转到下一个列表
+					✔ Ctrl+k 或 K => 跳转到上一个列表
+				☐ 文件
+					☐ Space+W => 保存文件并上传 ★
+					☐ Space+E => 快速退出
+					☐ Ctrl+n => 新建一个todo
+					☐ Tab和Shift+Tab => 多个todo快速切换
+			☐ insert模式 => 功能
+				☐ Tab => 向右缩进 ★
+				☐ Shift-Tab => 向左缩进 ★
+				☐ Enter => 换行编辑
+				☐ jj或kk或jk或;; => 回到normal模式 ★ ★ ★
+		☐ 终端命令 => 功能
+			☐ todo => 启动todo
+			☐ todo-setting => 设置同步方式 ★
+			☐ todo-upload => 上传todo到云端(跟文件内使用Space+w功能一致)
+			☐ todo-download => 获取todo最新版本记录(同步模式下运行todo自动获取最新)
+			☐ todo-history => 获取todo版本存储历史(版本号+用户+时间+主机信息)
+			☐ todo-fallback + 版本号 => todo版本回退 ★
+			☐ todo-changeLog => 获取todo版本变更记录
 
 	@My Board :多做笔记
 		☐ 看吴恩达上课笔记 ★ ★ ★
 		☐ 测试之前的ML代码能不能运行
 		✔ vim的Golbal整理
 		
-	@ 终端下
-		☐ 韦一笑命令行词典
-		☐ tree的使用
-		☐ vim中
-			☐ 延时加载ycm,
-				☐ 动态语法检查
-				☐ other
-			☐ gctags安装 
-
-	@python module
-		☐ matplotlib
-			✔ 总结博客
-		☐ pandas
-			✔ 总结博客
-		☐ opencv
-			✔ 看书
-			☐ 博客学习
-		☐ tensorflow ★
-			☐ 练习
-			✔ 总结博客
-		
-	@演示一下一个vim中使用的翻译插件
-		☐ 机器学习
-		☐ Kaggle入门 ★
-		☐ 做第一个项目
-		☐ 深度学习博客

@@ -19,5 +19,4 @@ if [ 'y' = $version ]; then
 else
 	echo '你配置了Todo-in-Vim极简版'
 	cp ./.vimrc_tiny ../.vimrc_for_todo
-	echo "cp ./.vimrc_tiny ../.vimrc_for_todo"
 fi
