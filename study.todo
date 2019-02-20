@@ -10,7 +10,8 @@ $ study-TODO
 		☐ tree的使用
 		☐ vim中
 			☐ 延时加载ycm,
-			☐ 动态语法检查
+				☐ 动态语法检查
+				☐ other
 			☐ gctags安装 
 
 	@python module
