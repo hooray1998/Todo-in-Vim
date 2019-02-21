@@ -267,10 +267,12 @@ nnoremap # maA ★`a
 nnoremap <Backspace> :.s/ ★//g<CR>
 nnoremap o "ryyo.:call NewLine()<CR>a
 nnoremap O O☐ 
-nnoremap <C-j> /^\s*@/e<CR>
-nnoremap <C-k> ?^\s*@?e<CR>
-nnoremap J /^\s*@/e<CR>
-nnoremap K ?^\s*@?e<CR>
+nnoremap <C-j> /^\s*@/e<CR>
+nnoremap <C-k> ?^\s*@?e<CR>
+nnoremap J /^\s*@/e<CR>
+nnoremap K ?^\s*@?e<CR>
+vnoremap J /^\s*@/e<CR>
+vnoremap K ?^\s*@?e<CR>
 nnoremap <C-n> :call NewTodo()<CR>
 nnoremap <C-z> u
 
