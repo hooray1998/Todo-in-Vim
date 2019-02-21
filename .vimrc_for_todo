@@ -216,6 +216,16 @@ func CheckAllChild()
 		.normal j
 	endif
 endfunc
+func NewTodo()
+	exec ":w"
+	let filename=input("请输入新todo文件名: ")
+	if match(filename,'.todo')>-1
+		exec ":edit ".expand(filename)
+	else
+		let filename=filename.'.todo'
+		exec ":edit ".expand(filename)
+	endif
+endfunc
 
 "=================================================================
 "	键盘命令
@@ -261,8 +271,9 @@ nnoremap O O☐
 nnoremap <C-j> /^\s*@/e<CR>
 nnoremap <C-k> ?^\s*@?e<CR>
 nnoremap J /^\s*@/e<CR>
+vnoremap J /^\s*@/e<CR>k
 nnoremap K ?^\s*@?e<CR>
-nnoremap <C-n> :edit 
+nnoremap <C-n> :call NewTodo()<CR>
 nnoremap <C-z> u
 
 
