@@ -10,6 +10,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" 使dd删除更加强大, 必须使用
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+
 " monokai theme" 一个主题,为了达到示例上的高亮彩色主题 "
 Plug 'patstockwell/vim-monokai-tasty'
 
@@ -118,7 +122,8 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 
-let g:airline_section_b = '%{strftime("%c")}'
+let g:airline_section_b = ''
+"let g:airline_section_b = '%{strftime("%c")}'
 let g:airline_section_c = ''
 let g:airline_section_x = ''
 let g:airline_section_y = ''
@@ -185,12 +190,11 @@ func CheckOrUncheck()
 		while k>loc_k || g>loc_k
 			if k>loc_k
 				.normal 0f☐s✔j""yy
-				let k=match(@","☐")
-				let g=match(@","✔")
 			else
-				let k=-1
-				let g=-1
+				.normal j""yy
 			endif
+			let k=match(@","☐")
+			let g=match(@","✔")
 		endwhile
 		.normal `b
 	elseif loc_g>-1
@@ -208,14 +212,6 @@ func NewLine()
 		.normal I☐ l
 	endif
 endfunc
-func CheckAllChild()
-	.normal "ryy
-	let loc = match(@r,"☐")
-	if loc>-1
-	else
-		.normal j
-	endif
-endfunc
 func NewTodo()
 	let filename=input("请输入新todo文件名: ")
 	if match(filename,'.todo')>-1
@@ -225,6 +221,51 @@ func NewTodo()
 		exec ":edit ".expand(filename)
 	endif
 endfunc
+func RemoveAllChild()
+	.normal ""yy
+	let k=match(@","☐")
+	let g=match(@","✔")
+	if k>-1 || g>-1
+		"判断是否有子主题
+		.normal j""yy
+		let kk=match(@","☐")
+		let gg=match(@","✔")
+		if kk>k&&kk>g || gg>k&&gg>g
+			"yes"
+			.normal viikokdk
+		else
+			.normal kd1dk
+		endif
+	else
+		.normal d1d
+	endif
+endfunc
+
+
+
+
+
+
+
+
+
+
+
+
+"=================================================================
+" Todo异步更新
+"=================================================================
+
+autocmd BufRead,BufNewFile *.todo set filetype=todo
+"每次启动Todo时都先最新版"
+"autocmd VimEnter *.todo call GitPull()
+"保存文件时自动存储该版本"
+"autocmd bufwritepost *.todo call GitPush() 
+"新建文件自动插入文件头 
+autocmd BufNewFile *.todo call Settitle()
+
+
+
 
 "=================================================================
 "	键盘命令
@@ -235,6 +276,7 @@ let mapleader="\<Space>"
 
 " 切换Buffer"
 nnoremap <Tab> :bn<CR>
+nnoremap tt :bn<CR>
 nnoremap <S-Tab> :bp<CR>
 " 删除当前Buffer"
 nnoremap <leader>x :bd %<CR><CR>
@@ -253,7 +295,7 @@ nnoremap <leader>w :w<CR><CR>
 nnoremap <leader>e :wqall<CR>
 "快捷复制粘贴至系统
 nnoremap <C-A> ggVG"+y<CR>
-
+nnoremap <leader>a ggVG"+y<CR>
 
 "=================================================================
 "	for TODO 快捷键
@@ -264,17 +306,23 @@ nnoremap <C-A> ggVG"+y<CR>
 nnoremap <Enter> mb:call  CheckOrUncheck()<CR>
 nnoremap * maA ★`a
 nnoremap # maA ★`a
+nnoremap <leader>s maA ★`a
 nnoremap <Backspace> :.s/ ★//g<CR>
 nnoremap o "ryyo.:call NewLine()<CR>a
 nnoremap O O☐ 
-nnoremap <C-j> /^\s*@/e<CR>
-nnoremap <C-k> ?^\s*@?e<CR>
 nnoremap J /^\s*@/e<CR>
 nnoremap K ?^\s*@?e<CR>
+nnoremap <C-j> /^\s*@/e<CR>
+nnoremap <C-k> ?^\s*@?e<CR>
+nnoremap <leader>j /^\s*@/e<CR>
+nnoremap <leader>k ?^\s*@?e<CR>
 vnoremap J /^\s*@/e<CR>
 vnoremap K ?^\s*@?e<CR>
 nnoremap <C-n> :call NewTodo()<CR>
+nnoremap <leader>n :call NewTodo()<CR>
 nnoremap <C-z> u
+nnoremap U <C-r>
+nnoremap dd :call RemoveAllChild()<CR>
 
 
 " insert 模式快捷键
@@ -290,17 +338,7 @@ inoremap ;; 
 " 改变缩进
 inoremap <Tab> .ma>>`ala
 inoremap <S-Tab> ma<<`aa
+inoremap ll .ma>>`ala
+inoremap hh ma<<`aa
 " 编辑下一行
 inoremap <Enter> "ryya.:call NewLine()<CR>a
-
-"=================================================================
-" Todo异步更新
-"=================================================================
-
-autocmd BufRead,BufNewFile *.todo set filetype=todo
-"每次启动Todo时都先最新版"
-"autocmd VimEnter *.todo call GitPull()
-"保存文件时自动存储该版本"
-"autocmd bufwritepost *.todo call GitPush() 
-"新建文件自动插入文件头 
-autocmd BufNewFile *.todo call Settitle()
