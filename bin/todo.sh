@@ -7,7 +7,7 @@
 TODO=$(cd "$(dirname "$0")/../";pwd)
 # 定义别名
 todo() { 
-	vim $TODO/*.todo -u $TODO/.vimrc_for_todo 
+	vim $TODO/*.[tn][o]* -u $TODO/.vimrc_for_todo 
 } # 专属的vimrc启动 
 #上传
 todo-upload(){
@@ -55,5 +55,5 @@ todo-setting(){
 }
 
 # 每次启动都显示todo
-todo-download
-echo "Todo 未完成列表";cat $TODO/*.todo |sed 's/\t/    /g'|grep '[$@☐]'  # 每次启动shell都会显示todo
+#todo-download
+#echo "Todo 未完成列表";cat $TODO/*.todo |sed 's/\t/    /g'|grep '[$@☐]'  # 每次启动shell都会显示todo

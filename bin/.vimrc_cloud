@@ -123,12 +123,13 @@ let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 
 let g:airline_section_b = ''
-"let g:airline_section_b = '%{strftime("%c")}'
-let g:airline_section_c = ''
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_section_error = ''
 let g:airline_section_warning = ''
+"let g:airline_section_gutter  (readonly, csv)
+let g:airline_section_z = ''
+
 let g:airline_powerline_fonts=1
 
 set laststatus=2 "1为关闭底部状态栏 2为开启"
@@ -149,6 +150,11 @@ let g:airline_theme='monokai_tasty'
 augroup vimrc
 	autocmd User AsyncRunStart call asyncrun#quickfix_toggle(1, 1)
 augroup END
+
+" 可视模式下f键翻译选中区域
+vnoremap f y:!clear; tl "
+nnoremap <C-f> yaw:!clear; tl "
+inoremap <C-f> yaw:!clear; tl "
 "=================================================================
 "	快捷键映射相关函数
 "=================================================================
@@ -161,6 +167,11 @@ func Settitle()
 endfunc 
 func GitPush() 
 	" 上传到云端
+	let g:airline_section_c = '正在同步todo'
+	let secondtime=string(localtime())
+	let strtime=strftime("%Y %b %d %X")  " 1997 Apr 27 11:53:25
+	call writefile([secondtime,strtime],'./bin/.last_time_of_update')
+
 	call system("git add --all")
 	call system("git commit -m \"`whoami` @  `hostname` in `date +%y-%m-%d=%H:%M:%S`\"")
 	exec ":AsyncRun git push origin master"
@@ -168,13 +179,36 @@ endfunc
 func GitPull() 
 	" 获取云端最新版
 	exec ":cd %:h"
+	let g:airline_section_c = '正在同步todo...'
 	.normal 
 	exec ":AsyncStop"
 	exec ":AsyncRun git pull origin master"  
-	autocmd User AsyncRunStop exec ":ccl"
-	autocmd User AsyncRunStop exec ":e %"
+	autocmd User AsyncRunStop call AtPullEnd()
 endfunc 
 func AtPullEnd()
+	"先初始化timelist
+	let g:timelist=[]
+	for line in readfile('./bin/.last_time_of_update', '', 2)
+		call add(g:timelist, line)
+	endfor
+
+	let secondtime=string(localtime())
+	let strtime=strftime("%Y %b %d %X")  " 1997 Apr 27 11:53:25
+	let diff = secondtime - g:timelist[0]
+	if(diff<60)
+		let diff_time = string(diff).'秒前'
+	elseif(diff<3600)
+		let diff_time = string(diff/60).'分钟前'
+	elseif(diff<86400)
+		let diff_time = string(diff/3600).'小时前'
+	elseif(diff<2592000)
+		let diff_time = string(diff/86400).'天前'
+	else
+		let diff_time = string(diff/2592000).'月前'
+	endif
+	let g:airline_section_c = '同步成功(上次同步:'.diff_time.')'
+	exec ":ccl"
+	exec ":e %"
 endfunc
 func CheckOrUncheck()
 	" 选中或取消选中
@@ -222,24 +256,31 @@ func NewTodo()
 	endif
 endfunc
 func RemoveAllChild()
-	.normal ""yy
-	let k=match(@","☐")
-	let g=match(@","✔")
-	if k>-1 || g>-1
-		"判断是否有子主题
-		.normal j""yy
-		let kk=match(@","☐")
-		let gg=match(@","✔")
-		if kk>k&&kk>g || gg>k&&gg>g
-			"yes"
-			.normal viikokdk
-		else
-			.normal kd1dk
-		endif
-	else
+	if(getpos('.')[1]==getpos('$')[1])
 		.normal d1d
+	else
+		.normal ""yy
+		let k=match(@","☐")
+		let g=match(@","✔")
+		if k>-1 || g>-1
+			"判断是否有子主题
+			.normal j""yy
+			let kk=match(@","☐")
+			let gg=match(@","✔")
+			if kk>k&&kk>g || gg>k&&gg>g
+				"yes"
+				.normal viikokdk
+			else
+				.normal kd1dk
+			endif
+		else
+			.normal d1d
+		endif
 	endif
 endfunc
+"func ClearAllCheck()
+	".normal 
+"endfunc
 
 
 
@@ -256,7 +297,7 @@ endfunc
 " Todo异步更新
 "=================================================================
 
-autocmd BufRead,BufNewFile *.todo set filetype=todo
+autocmd BufRead,BufNewFile *.todo,*.note set filetype=todo
 "每次启动Todo时都先最新版"
 autocmd VimEnter *.todo call GitPull()
 "保存文件时自动存储该版本"
@@ -303,7 +344,7 @@ nnoremap <leader>a ggVG"+y<CR>
 
 " normal 模式快捷键
 "=================================================================
-nnoremap <Enter> mb:call  CheckOrUncheck()<CR>
+nnoremap <Enter> mb:call  CheckOrUncheck()<CR>j
 nnoremap * maA ★`a
 nnoremap # maA ★`a
 nnoremap <leader>s maA ★`a
@@ -323,6 +364,7 @@ nnoremap <leader>n :call NewTodo()<CR>
 nnoremap <C-z> u
 nnoremap U <C-r>
 nnoremap dd :call RemoveAllChild()<CR>
+nnoremap <leader>l :g/\v✔.*$/d<CR>
 
 
 " insert 模式快捷键
@@ -334,11 +376,16 @@ inoremap kk 
 inoremap jk 
 inoremap kj 
 inoremap ;; 
+inoremap 完毕 :w<CR>
+inoremap OK :w<CR>
+inoremap ok :w<CR>
+inoremap .. :w<CR>
+inoremap 结束 :w<CR>
 
 " 改变缩进
 inoremap <Tab> .ma>>`ala
 inoremap <S-Tab> ma<<`aa
-inoremap ll .ma>>`ala
-inoremap hh ma<<`aa
+inoremap pp .ma>>`ala
+inoremap qq ma<<`aa
 " 编辑下一行
 inoremap <Enter> "ryya.:call NewLine()<CR>a

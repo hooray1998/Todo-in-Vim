@@ -5,7 +5,14 @@ if [ ! -e $HOME/.vim ]
 then
 	mkdir $HOME/.vim
 fi
+if [ ! -e $HOME/.vim/autoload ]
+then
+	mkdir $HOME/.vim/autoload
+fi
+
+cp ./.vim_Plugins/autoload/plug.vim $HOME/.vim/autoload/
 cp -r .vim_Plugins/* $HOME/.vim/
+
 cp bin/.vimrc_git ./.vimrc_for_todo
 
 if [ "/bin/zsh" = $SHELL ]

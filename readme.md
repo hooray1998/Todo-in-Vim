@@ -1,11 +1,10 @@
 ## 前言
 该程序由多个工具搭建而成<br>
-> - 基于Vim的快捷和高可定制性<br>
-> - 基于git的云同步<br>
-> - 使用异步执行shell的Vim插件(skywind3000/asyncrun.vim)<br>
+- 基于Vim的快捷和高可定制性<br>
+- 基于git的云同步<br>
+- 基于手机上的语音输入，可以快速新增todo并同步(手机端需要安装termux)
+- 使用异步执行shell的Vim插件(skywind3000/asyncrun.vim)<br>
 从而实现美观的界面,快捷的Todo管理以及极快的同步速度
-
-> 支持平台，Mac OS, Linux, Windows, Android(termux)
 
 ## 演示gif
 
@@ -22,8 +21,6 @@ git clone 该项目到本地
 ```
 cd Todo-in-Vim
  ./init.sh
-输入todo
-程序中输入:PlugInstall
 ```
 ### 步骤三 实现多平台同步功能 (不需要多平台同步功能可跳过)
 
@@ -50,15 +47,6 @@ Space+W|保存文件并上传
 Space+E|快速退出
 Tab和Shift+Tab|多个缓存文件切换
 Ctrl+n|新建一个todo
-dd|删除当前项以及所有子项
-为方便手机操作而增加的|
-Space+j|跳转到下一个列表
-Space+k|跳转到上一个列表
-Space+s|添加⭐️
-Space+n|新建一个todo
-U|重做
-tt|多个缓存文件切换
-
 
 
 insert模式|功能
@@ -66,10 +54,7 @@ insert模式|功能
 Tab|向右缩进
 Shift-Tab|向左缩进
 Enter|换行编辑
-jj或kk或jk或kj或;;|回到normal模式
-为方便手机操作而增加的|
-ll|向右缩进
-hh|向左缩进
+jj或kk或jk或;;|回到normal模式
 
 终端命令|功能
 :-|:-
@@ -93,7 +78,11 @@ todo-setting|设置同步方式
 参考博客[努力学习Vimscript](http://learnvimscriptthehardway.stevelosh.com/chapters/45.html#exercises)
 ### 快捷键定制
 
-修改.vimrc_for_todo的第270-344行内容，参考着改就好
+直接修改.vimrc_for_todo的相关映射内容
+
+### 图标定制
+
+用任意图标替换.vimrc_for_todo中的✔ , ☐  和★ 即可.
 
 ### 同步方式定制
 

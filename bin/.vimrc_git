@@ -149,6 +149,11 @@ let g:airline_theme='monokai_tasty'
 "augroup vimrc
 	"autocmd User AsyncRunStart call asyncrun#quickfix_toggle(1, 1)
 "augroup END
+
+" 可视模式下f键翻译选中区域
+vnoremap f y:!clear; tl "
+nnoremap <C-f> yaw:!clear; tl "
+inoremap <C-f> yaw:!clear; tl "
 "=================================================================
 "	快捷键映射相关函数
 "=================================================================
